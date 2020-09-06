@@ -1,19 +1,38 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {dialog, ipcMain, app, BrowserWindow, Menu} = require('electron')
 const path = require('path')
+const PDFWindow = require('electron-pdf-window')
+const fs = require('fs');
+const homedir = require('os').homedir();
 
+const b64 = require('js-base64');
+const { info } = require('console');
+
+
+
+let pdfw;
+let mainWindow;
 function createWindow () {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      
+      
+      
     }
   })
 
+  mainWindow.maximize();
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile("index.html")
+  mainWindow.resizable = false;
+  
+  
+ 
+  
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -23,6 +42,8 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  
+  //Menu.setApplicationMenu(null)
   createWindow()
   
   app.on('activate', function () {
@@ -30,7 +51,32 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+ 
+  ipcMain.on('custom-message', (event, message) => {
+    
+    let data = message.pdf;
+    let encode = b64.Base64.atob(data);
+
+    dialog.showSaveDialog({filters:[{name: "PDF Document", extensions: ['pdf']}]}).then(result => {
+
+      
+
+      fs.writeFileSync(result.filePath, encode,'binary');
+
+      dialog.showMessageBox({type:"info", title:"Print", message:"PDF Saved!"})
+
+    })
+    
+    
+
+  });
+ 
+  
 })
+
+
+
+
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

@@ -5,15 +5,499 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
+    
+    <link rel="stylesheet" href="./src/bootstrap.css">
+    <link rel="stylesheet" href="./app.css">
+    <link rel="stylesheet" href="./src/jquery-ui.css">
+    <link rel="stylesheet" href="./src/jquery-ui.structure.css">
+    <link rel="stylesheet" href="./src/jquery-ui.theme.css">
+    
+    
+    
+    <title>Royal Home Brands</title>
+    
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand brand" href="#">Royal Home Brands</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
+        <ul class="navbar-nav ml-auto">
+        <button type="button" class=" mx-2 btn btn-primary"><img class="image-size" src="./src/upload.png"/> Update Data</button>
+        <button type="button" class=" mx-2 btn btn-secondary"><img class="image-size" src="./src/refresh.png"/> Refresh Data</button>
+        <button id="pdf-btn" type="button" class=" mx-2 btn btn-success"><img class="image-size" src="./src/pdf.png"/>  Print to PDF </button>
+      </ul>
+
+      </div>
+    </nav>
+
+    <div class="container my-2">
+    
+      <div class=" row container my-2">
+      
+      <div class="d-inline">
+        <label class="po-label" for="po">Purchase Order</label>
+        <select name="po" id="po">
+         
+          
+          
+        </select>
+      </div>
+
+      <div class="d-inline mx-2">
+         
+        <input id="add-po" type="text" class="form-control" id="usr" placeholder="Add Purchase Order"> 
+      
+      </div>
+
+      <div class="d-inline mx-2">
+         
+        <button id="add-po-btn" class="btn btn-primary">Add</button>
+      
+      </div>
+      
+     </div>
+
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <img class="image-size" src="./src/package.png"/> Packaging
+              
+            </button>
+          </h5>
+        </div>
+        
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            <table id="pack-tb" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Item Type</th>
+                  <th scope="col">Size</th>
+                  <th scope="col">Demand Quantity</th>
+                  <th scope="col">Quantity in Hand</th>
+                  <th scope="col">Required Quantity</th>
+				  <th scope="col">Recieved Quantity</th>
+                  <th scope="col">Quantity Issued</th>
+                  
+                  
+                  <th scope="col">Waste</th>
+                  <th scope="col">Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr >
+                  <th scope="row" rowspan="6">Carton</th>
+				  
+                  <td class="item_type" id="single">
+					
+                    Single
+
+                  </td>
+                 
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input  type="number" min="0" class="qty p-2 d-inline form-control" id="id1" type="text" placeholder="Enter Amount" onchange="id1change(this)"> 
+                  </td>
+				  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id2" type="text" class="qi p-2 d-inline form-control" placeholder="Enter Amount">
+                  
+                  </td>
+                    
+                  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id3" type="text" class="w p-2 d-inline form-control" placeholder="Enter Amount">
+
+                  </td>
+					
+				  <td>
+                    <span id="forTable" class="d-none"></span>
+					<label for="id3">Recieving Date: </label>
+                    <input  id="id4" type="date" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amt3">Amount Recieved: </label>
+                    <input type="number" id="id5" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amtfrom3">Recieved From: </label>
+                    <input  id="id6" type="text" class="w input-width p-2 d-inline form-control" placeholder="Enter ..">
+                  </td>	
+					
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id7" type="text" class="issue w p-2 d-inline form-control" placeholder="Enter Amount" onchange="id7change(this)">
+                  </td>
+
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id8" type="text" class="waste p-2 d-inline form-control" placeholder="Enter Amount" onchange="id8change(this)">
+                  </td>
+
+                    <td class="bal" >0</td>
+
+                  </tr>
+
+                  <tr>
+                    
+					
+                    <td class="item_type" id="double">Double</td>
+                  
+				  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input  type="number" min="0" class="qty p-2 d-inline form-control" id="id1" type="text" placeholder="Enter Amount" onchange="id1change(this)"> 
+                  </td>
+				  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id2" type="text" class="qi p-2 d-inline form-control" placeholder="Enter Amount">
+                  
+                  </td>
+                    
+                  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id3" type="text" class="w p-2 d-inline form-control" placeholder="Enter Amount">
+
+                  </td>
+					
+				  <td>
+                    <span id="forTable" class="d-none"></span>
+					<label for="id3">Recieving Date: </label>
+                    <input  id="id4" type="date" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amt3">Amount Recieved: </label>
+                    <input type="number" id="id5" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amtfrom3">Recieved From: </label>
+                    <input  id="id6" type="text" class="w input-width p-2 d-inline form-control" placeholder="Enter ..">
+                  </td>	
+					
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id7" type="text" class="issue p-2 d-inline form-control" placeholder="Enter Amount" onchange="id7change(this)">
+                  </td>
+
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id8" type="text" class="waste p-2 d-inline form-control" placeholder="Enter Amount" onchange="id8change(this)">
+                  </td>
+                    <td class="bal" >0</td>
+                  
+                  </tr>
+
+                  <tr>
+                   
+					
+                    <td class="item_type" id="full">Full</td>
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input  type="number" min="0" class="qty p-2 d-inline form-control" id="id1" type="text" placeholder="Enter Amount" onchange="id1change(this)"> 
+                  </td>
+				  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id2" type="text" class="qi p-2 d-inline form-control" placeholder="Enter Amount">
+                  
+                  </td>
+                    
+                  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id3" type="text" class="w p-2 d-inline form-control" placeholder="Enter Amount">
+
+                  </td>
+					
+				  <td>
+                    <span id="forTable" class="d-none"></span>
+					<label for="id3">Recieving Date: </label>
+                    <input  id="id4" type="date" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amt3">Amount Recieved: </label>
+                    <input type="number" id="id5" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amtfrom3">Recieved From: </label>
+                    <input  id="id6" type="text" class="w input-width p-2 d-inline form-control" placeholder="Enter ..">
+                  </td>	
+					
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id7" type="text" class="issue p-2 d-inline form-control" placeholder="Enter Amount" onchange="id7change(this)">
+                  </td>
+
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id8" type="text" class="waste p-2 d-inline form-control" placeholder="Enter Amount"onchange="id8change(this)">
+                  </td>
+
+                    <td class="bal" >0</td>
+                  
+                  </tr>
+
+                  <tr>
+                    
+					
+                    <td id="queen" class="item_type">Queen</td>
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input  type="number" min="0" class="qty p-2 d-inline form-control" id="id1" type="text" placeholder="Enter Amount" onchange="id1change(this)"> 
+                  </td>
+				  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id2" type="text" class="qi p-2 d-inline form-control" placeholder="Enter Amount">
+                  
+                  </td>
+                    
+                  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id3" type="text" class="w p-2 d-inline form-control" placeholder="Enter Amount">
+
+                  </td>
+					
+				  <td>
+                    <span id="forTable" class="d-none"></span>
+					<label for="id3">Recieving Date: </label>
+                    <input  id="id4" type="date" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amt3">Amount Recieved: </label>
+                    <input type="number" id="id5" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amtfrom3">Recieved From: </label>
+                    <input  id="id6" type="text" class="w input-width p-2 d-inline form-control" placeholder="Enter ..">
+                  </td>	
+					
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id7" type="text" class="issue p-2 d-inline form-control" placeholder="Enter Amount" onchange="id7change(this)">
+                  </td>
+
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id8" type="text" class="waste p-2 d-inline form-control" placeholder="Enter Amount" onchange="id8change(this)">
+                  </td>
+
+                    <td class="bal" >0</td>
+                  
+                  </tr>
+
+                  <tr>
+                    
+					
+                    <td id ="king" class="item_type" >King</td>
+                  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input  type="number" min="0" class="qty p-2 d-inline form-control" id="id1" type="text" placeholder="Enter Amount" onchange="id1change(this)"> 
+                  </td>
+				  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id2" type="text" class="qi p-2 d-inline form-control" placeholder="Enter Amount">
+                  
+                  </td>
+                    
+                  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id3" type="text" class="w p-2 d-inline form-control" placeholder="Enter Amount">
+
+                  </td>
+					
+				  <td>
+                    <span id="forTable" class="d-none"></span>
+					<label for="id3">Recieving Date: </label>
+                    <input  id="id4" type="date" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amt3">Amount Recieved: </label>
+                    <input type="number" id="id5" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amtfrom3">Recieved From: </label>
+                    <input  id="id6" type="text" class="w input-width p-2 d-inline form-control" placeholder="Enter ..">
+                  </td>	
+					
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id7" type="text" class="issue p-2 d-inline form-control" placeholder="Enter Amount" onchange="id7change(this)">
+                  </td>
+
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id8" type="text" class="waste p-2 d-inline form-control" placeholder="Enter Amount" onchange="id8change(this)">
+                  </td>
+
+                    <td class="bal" >0</td>
+                  </tr>
+
+                  <tr>
+                    
+                    <td id ="super_king" class="item_type" >Super King</td>
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input  type="number" min="0" class="qty p-2 d-inline form-control" id="id1" type="text" placeholder="Enter Amount" onchange="id1change(this)"> 
+                  </td>
+				  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id2" type="text" class="qi p-2 d-inline form-control" placeholder="Enter Amount">
+                  
+                  </td>
+                    
+                  
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id3" type="text" class="w p-2 d-inline form-control" placeholder="Enter Amount">
+
+                  </td>
+					
+				  <td>
+                    <span id="forTable" class="d-none"></span>
+					<label for="id3">Recieving Date: </label>
+                    <input  id="id4" type="date" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amt3">Amount Recieved: </label>
+                    <input type="number" id="id5" class="w input-width p-2 d-inline form-control" placeholder="Enter Amount">
+					<label for="amtfrom3">Recieved From: </label>
+                    <input  id="id6" type="text" class="w input-width p-2 d-inline form-control" placeholder="Enter ..">
+                  </td>	
+					
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id7" type="text" class="issue p-2 d-inline form-control" placeholder="Enter Amount" onchange="id7change(this)">
+                  </td>
+
+                  <td>
+                    <span id="forTable" class="d-none"></span>
+                    <input type="number" id="id8" type="text" class="waste p-2 d-inline form-control" placeholder="Enter Amount" onchange="id8change(this)">
+                  </td>
+
+                    <td class="bal" >0</td>
+                  
+                  </tr>
+
+                
+              </tbody>
+            </table>
+               
+            <button id="save" class="btn btn-secondary btn-block">SAVE LOCALLY</button>
+
+            <div id="gModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 id="mtitle" class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+                  </div>
+                  <div id="mtext" class="modal-body">
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+
+            <div id="gModal2" class="lmodal modal fade" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    
+                    <h4 id="mtitle2" class="modal-title">Please Login First</h4>
+                  </div>
+                  <div id="mtext2" class="modal-body">
+
+                    <div id="log-fail" class="alert alert-danger my-3" role="alert">
+                      Incorrect Login Details
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><img 
+                           src="./src/person-3x.png" /></span>
+                      </div>
+                      <input id="user" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><img 
+                                                         src="./src/lock-locked-3x.png" /></span>
+                      </div>
+                      <input id="pass" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                    </div>
+                    
+                  <div class="modal-footer">
+                    <button id="log-btn" type="button" class="btn btn-primary" >Login</button>
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <img class="image-size" src="./src/needle.jpg"/> Stitching
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body">
+            
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              <img class="image-size" src="./src/fabric.png"/> Fabric
+            </button>
+          </h5>
+        </div>
+        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+          <div class="card-body">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+     
 
     <!-- You can also require other files to run in this process -->
+    
+    
+    
+   
+
+    
+    <script src="./src/jspdf.min.js"></script>
+    <script src="./src/jspdf.plugin.autotable.js"></script>
+
+    
+    
+    <script id="jq" src="./src/jquery-3.5.1.min.js"></script>
+    <script src="./src/jquery-ui.js"></script>
+   
+    <script src="./src/bootstrap.js"></script>
     <script src="./renderer.js"></script>
+    <script src="./app.js"></script>
+    
+
+
+
+
   </body>
 </html>
